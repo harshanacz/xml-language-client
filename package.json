@@ -1,0 +1,36 @@
+{
+  "name": "xml-language-client",
+  "displayName": "XML Language Support",
+  "description": "XML language support powered by xml-language-server",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.85.0"
+  },
+  "categories": ["Programming Languages"],
+  "activationEvents": [
+    "onLanguage:xml"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "languages": [
+      {
+        "id": "xml",
+        "extensions": [".xml", ".xsd", ".xsl"],
+        "aliases": ["XML", "xml"]
+      }
+    ]
+  },
+  "scripts": {
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "package": "vsce package"
+  },
+  "dependencies": {
+    "vscode-languageclient": "^9.0.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "@types/vscode": "^1.85.0",
+    "@vscode/vsce": "^2.0.0"
+  }
+}
