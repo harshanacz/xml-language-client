@@ -9,11 +9,7 @@ import {
 
 let client: LanguageClient
 
-/**
- * Activates the XML Language Client extension, configures the language server
- * options, and starts the client.
- */
-export function activate(context: ExtensionContext): void {
+export async function activate(context: ExtensionContext): Promise<void> {
   const serverModule = path.join(
     context.extensionPath,
     '..',
@@ -22,25 +18,23 @@ export function activate(context: ExtensionContext): void {
     'server.js'
   )
 
-  console.log('XML Language Server module path:', serverModule)
-
   const serverOptions: ServerOptions = {
     run: {
-      module: serverModule,
-      transport: TransportKind.ipc
+      command: process.execPath,
+      args: [serverModule, '--stdio'],
+      transport: TransportKind.stdio
     },
     debug: {
-      module: serverModule,
-      transport: TransportKind.ipc,
-      options: {
-        execArgv: ['--nolazy', '--inspect=6009']
-      }
+      command: process.execPath,
+      args: ['--nolazy', '--inspect=6009', serverModule, '--stdio'],
+      transport: TransportKind.stdio
     }
   }
 
   const clientOptions: LanguageClientOptions = {
     documentSelector: [
-      { scheme: 'file', language: 'xml' }
+      { scheme: 'file', language: 'xml' },
+      { scheme: 'untitled', language: 'xml' }
     ],
     synchronize: {
       fileEvents: workspace.createFileSystemWatcher('**/*.xml')
@@ -54,16 +48,16 @@ export function activate(context: ExtensionContext): void {
     clientOptions
   )
 
-  client.start()
+  try {
+    await client.start() // This is the important fix
+    console.log('XML Language Client started')
+  } catch (error) {
+    console.error('Failed to start XML Language Client:', error)
+  }
 
   context.subscriptions.push(client)
-
-  console.log('XML Language Client activated successfully')
 }
 
-/**
- * Deactivates the extension by stopping the language client if it is running.
- */
 export function deactivate(): Thenable<void> | undefined {
   if (!client) {
     return undefined
