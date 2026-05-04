@@ -155,7 +155,8 @@ git clone https://github.com/harshanacz/xml-language-client.git</code></pre>
           <p>
             Build from the bottom layer upward: service first, server second, client last. That ensures
             the local <code>file:</code> dependencies and generated server entry point are ready before
-            the extension tries to start.
+            the extension tries to start. Start from inside <code>xml-language-workspace</code> and run
+            the steps in order.
           </p>
 
           <div class="steps">
@@ -163,7 +164,7 @@ git clone https://github.com/harshanacz/xml-language-client.git</code></pre>
               <span class="step-number">1</span>
               <div>
                 <h3>Install and build the service</h3>
-                <pre class="code-block"><button class="copy-button" type="button">Copy</button><code>cd ../xml-language-service
+                <pre class="code-block"><button class="copy-button" type="button">Copy</button><code>cd xml-language-service
 npm install
 npm run build</code></pre>
               </div>
@@ -192,6 +193,12 @@ npm install
 npm run build</code></pre>
               </div>
             </article>
+          </div>
+          <div class="callout">
+            <strong>New terminal note:</strong>
+            If you open a fresh terminal in <code>xml-language-workspace</code> for step 2 or 3, use
+            <code>cd xml-language-server</code> or <code>cd xml-language-client</code> instead of the
+            <code>../</code> command shown for the sequential flow.
           </div>
         </section>
 
