@@ -30,6 +30,7 @@
         <input id="doc-search" type="search" placeholder="Search setup, schema, debug">
         <a href="#overview">Overview</a>
         <a href="#layout">Workspace Layout</a>
+        <a href="#clone">Clone Repositories</a>
         <a href="#quick-start">Quick Start</a>
         <a href="#run">Run in VS Code</a>
         <a href="#test-workspace">Test Workspace</a>
@@ -122,6 +123,27 @@
           <p>
             The parent folder can be named anything. What matters is that these repositories are siblings
             while you are developing with local <code>file:</code> dependencies.
+          </p>
+        </section>
+
+        <section class="doc-section" id="clone" data-search="clone repositories git github fresh setup workspace xml-language-client xml-language-server xml-language-service">
+          <div class="section-heading">
+            <p class="eyebrow">Fresh setup</p>
+            <h2>Clone Repositories</h2>
+          </div>
+          <p>
+            Start by cloning all three repositories into the same parent folder so the local
+            <code>file:</code> dependencies and server path resolve correctly.
+          </p>
+          <pre class="code-block"><button class="copy-button" type="button">Copy</button><code>mkdir xml-language-workspace
+cd xml-language-workspace
+
+git clone https://github.com/harshanacz/xml-language-service.git
+git clone https://github.com/harshanacz/xml-language-server.git
+git clone https://github.com/harshanacz/xml-language-client.git</code></pre>
+          <p>
+            After cloning, continue with the build commands below from inside
+            <code>xml-language-client</code>.
           </p>
         </section>
 
