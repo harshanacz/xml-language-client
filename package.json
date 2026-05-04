@@ -37,7 +37,10 @@
           "description": "Custom XSD schema associations.",
           "items": {
             "type": "object",
-            "required": ["pattern", "xsdPath"],
+            "required": [
+              "pattern",
+              "xsdPath"
+            ],
             "properties": {
               "pattern": {
                 "type": "string",
@@ -59,7 +62,8 @@
     "package": "vsce package"
   },
   "dependencies": {
-    "vscode-languageclient": "^9.0.1"
+    "vscode-languageclient": "^9.0.1",
+    "xml-language-service": "file:../xml-language-service"
   },
   "devDependencies": {
     "@types/node": "^25.6.0",
