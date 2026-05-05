@@ -50,7 +50,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
   )
 
   try {
-    await client.start() // This is the important fix
+    await client.start() 
     console.log('XML Language Client started')
   } catch (error) {
     console.error('Failed to start XML Language Client:', error)
