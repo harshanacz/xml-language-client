@@ -1,58 +1,27 @@
 # XML Language Client
 
-VS Code language client for XML support, powered by `xml-language-server` and
-`xml-language-service`.
+VS Code language client for XML support, powered by `wso2-mi-xml-ls`.
 
-## Documentation
-
-Full setup instructions are available at:
-
-https://harshanacz.github.io/xml-language-client/
-
-The source for the documentation site lives in [`docs/`](docs/).
 
 ## Architecture
 
 ```text
 VS Code extension
   -> xml-language-client
-  -> xml-language-server
-  -> xml-language-service
+  -> wso2-mi-xml-ls
 ```
 
-The client activates when VS Code opens XML-family files and starts the language
-server over stdio from `../xml-language-server/dist/server.js`.
+## Connect the Language Server
 
-## Repository Layout
-
-During local development, keep the three repositories as siblings:
-
-```text
-xml-language-workspace/
-  xml-language-service/
-  xml-language-server/
-  xml-language-client/
-```
-
-## Fresh Setup
 
 ```bash
-mkdir xml-language-workspace
-cd xml-language-workspace
+mkdir wso2-mi-xml-workspace
+cd wso2-mi-xml-workspace
 
-git clone https://github.com/harshanacz/xml-language-service.git
-git clone https://github.com/harshanacz/xml-language-server.git
+git clone https://github.com/harshanacz/wso2-mi-xml-ls.git
 git clone https://github.com/harshanacz/xml-language-client.git
-```
 
-Build in dependency order:
-
-```bash
-cd xml-language-service
-npm install
-npm run build
-
-cd ../xml-language-server
+cd wso2-mi-xml-ls
 npm install
 npm run bundle
 
@@ -61,38 +30,12 @@ npm install
 npm run build
 ```
 
+Then open `xml-language-client` in VS Code, run the `Launch Extension` debug
+configuration, and open an XML file in the Extension Development Host.
+
 ## Development
 
 Open `xml-language-client` in VS Code and run the `Launch Extension` debug
 configuration. In the Extension Development Host window, open an `.xml`, `.xsd`,
 or `.xsl` file to activate the client.
 
-For a sample XML workspace, use:
-
-```bash
-git clone https://github.com/harshanacz/xls-test.git
-code xls-test
-```
-
-## Schema Configuration
-
-Custom XSD associations can be configured in VS Code settings:
-
-```json
-{
-  "xmlLanguageServer.schemas": [
-    {
-      "pattern": "config.xml",
-      "xsdPath": "schemas/config.xsd"
-    }
-  ]
-}
-```
-
-Relative `xsdPath` values are resolved from the workspace root.
-
-## Package
-
-```bash
-npm run package
-```
