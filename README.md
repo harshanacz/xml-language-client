@@ -1,6 +1,6 @@
 # XML Language Client
 
-VS Code language client for XML support, powered by `wso2-mi-xml-ls`.
+VS Code language client for XML support, powered by `wso2-mi-language-server-ts`.
 
 
 ## Architecture
@@ -8,7 +8,7 @@ VS Code language client for XML support, powered by `wso2-mi-xml-ls`.
 ```text
 VS Code extension
   -> xml-language-client
-  -> wso2-mi-xml-ls
+  -> wso2-mi-language-server-ts
 ```
 
 ## Connect the Language Server
@@ -18,10 +18,10 @@ VS Code extension
 mkdir wso2-mi-xml-workspace
 cd wso2-mi-xml-workspace
 
-git clone https://github.com/harshanacz/wso2-mi-xml-ls.git
+git clone https://github.com/harshanacz/wso2-mi-language-server-ts.git
 git clone https://github.com/harshanacz/xml-language-client.git
 
-cd wso2-mi-xml-ls
+cd wso2-mi-language-server-ts
 npm install
 npm run bundle
 

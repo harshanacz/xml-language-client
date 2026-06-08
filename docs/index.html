@@ -6,7 +6,7 @@
     <title>XML Language Client Setup Guide</title>
     <meta
       name="description"
-      content="Setup instructions for wiring xml-language-client to xml-language-server and xml-language-service."
+      content="Short setup guide for connecting xml-language-client with wso2-mi-xml-ls."
     >
     <link rel="stylesheet" href="styles.css">
   </head>
@@ -27,164 +27,90 @@
     <div class="layout" id="top">
       <nav class="sidebar" id="site-nav" aria-label="Setup sections">
         <label class="search-label" for="doc-search">Find in guide</label>
-        <input id="doc-search" type="search" placeholder="Search setup, schema, debug">
+        <input id="doc-search" type="search" placeholder="Search setup, run, server">
         <a href="#overview">Overview</a>
-        <a href="#layout">Workspace Layout</a>
-        <a href="#clone">Clone Repositories</a>
-        <a href="#quick-start">Quick Start</a>
-        <a href="#run">Run in VS Code</a>
+        <a href="#architecture">Architecture</a>
+        <a href="#setup">Setup</a>
+        <a href="#run">Run</a>
         <a href="#test-workspace">Test Workspace</a>
-        <a href="#schemas">Schema Setup</a>
-        <a href="#debug">Debugging</a>
-        <a href="#package">Package</a>
         <a href="#troubleshooting">Troubleshooting</a>
-        <a href="#checklist">Checklist</a>
       </nav>
 
       <main>
-        <section class="hero doc-section" data-search="overview architecture client server service lsp vscode">
+        <section class="hero doc-section" id="overview" data-search="overview client server vscode lsp wso2-mi-xml-ls">
           <p class="eyebrow">Setup guide</p>
-          <h1>Connect the XML VS Code client to the language server and service.</h1>
+          <h1>Connect the VS Code XML client to <code>wso2-mi-xml-ls</code>.</h1>
           <p class="lead">
-            This guide shows the expected sibling-project layout, build order, VS Code launch flow,
-            schema configuration, and the moving parts between the client, server, and service.
+            Clone the language server beside this client, build the server bundle, then run
+            the VS Code extension and open an XML file.
           </p>
 
           <div class="hero-actions" aria-label="Primary actions">
-            <a class="button primary" href="#quick-start">Start setup</a>
+            <a class="button primary" href="#setup">Setup commands</a>
             <a class="button secondary" href="#troubleshooting">Fix startup issues</a>
           </div>
-
-
         </section>
 
-        <section class="doc-section" id="overview" data-search="overview features document selector activation stdio server path">
+        <section class="doc-section" id="architecture" data-search="architecture client server path sibling folders dist server js">
           <div class="section-heading">
-            <p class="eyebrow">What runs where</p>
-            <h2>Overview</h2>
+            <p class="eyebrow">How it works</p>
+            <h2>Architecture</h2>
           </div>
           <div class="feature-grid">
             <article class="feature-card">
               <h3>Client</h3>
               <p>
-                This repository is the VS Code extension. It activates on the <code>xml</code>
-                language and starts the server process with Node over stdio.
+                <code>xml-language-client</code> is the VS Code extension. It activates when VS Code
+                opens a document with the <code>xml</code> language.
               </p>
             </article>
             <article class="feature-card">
               <h3>Server</h3>
               <p>
-                <code>xml-language-server</code> is the Language Server Protocol wrapper. It exposes
-                completion, hover, diagnostics, symbols, folding, rename, definition, references, and formatting.
+                <code>wso2-mi-xml-ls</code> is the language server. Build it with
+                <code>npm run bundle</code> before running the client.
               </p>
             </article>
             <article class="feature-card">
-              <h3>Service</h3>
+              <h3>Expected path</h3>
               <p>
-                <code>xml-language-service</code> is the editor-agnostic TypeScript library. It provides
-                XML parsing, language features, schema association, and Xerces WASM XSD validation.
+                The client starts the server from
+                <code>../wso2-mi-xml-ls/dist/server.js</code>.
               </p>
             </article>
           </div>
         </section>
 
-        <section class="doc-section" id="layout" data-search="workspace layout sibling repositories file dependency server module path">
+        <section class="doc-section" id="setup" data-search="setup clone npm install bundle build sibling repositories">
           <div class="section-heading">
-            <p class="eyebrow">Important</p>
-            <h2>Workspace Layout</h2>
+            <p class="eyebrow">Start here</p>
+            <h2>Setup</h2>
           </div>
           <p>
-            Keep the three language tooling projects beside each other. The client currently launches the server from
-            <code>../xml-language-server/dist/server.js</code>, and both the client and server use the
-            service through <code>file:../xml-language-service</code>.
+            Keep both repositories inside the same parent folder. The parent folder can have any
+            name, but the server folder should be named <code>wso2-mi-xml-ls</code>.
           </p>
-          <pre class="code-block"><button class="copy-button" type="button">Copy</button><code>xml-language-workspace/
-  xml-language-service/
-  xml-language-server/
-  xml-language-client/</code></pre>
-          <p>
-            The parent folder can be named anything. What matters is that these repositories are siblings
-            while you are developing with local <code>file:</code> dependencies.
-          </p>
-        </section>
+          <pre class="code-block"><button class="copy-button" type="button">Copy</button><code>mkdir wso2-mi-xml-workspace
+cd wso2-mi-xml-workspace
 
-        <section class="doc-section" id="clone" data-search="clone repositories git github fresh setup workspace xml-language-client xml-language-server xml-language-service">
-          <div class="section-heading">
-            <p class="eyebrow">Fresh setup</p>
-            <h2>Clone Repositories</h2>
-          </div>
-          <p>
-            Start by cloning all three repositories into the same parent folder so the local
-            <code>file:</code> dependencies and server path resolve correctly.
-          </p>
-          <pre class="code-block"><button class="copy-button" type="button">Copy</button><code>mkdir xml-language-workspace
-cd xml-language-workspace
+git clone https://github.com/harshanacz/wso2-mi-xml-ls.git
+git clone https://github.com/harshanacz/xml-language-client.git
 
-git clone https://github.com/harshanacz/xml-language-service.git
-git clone https://github.com/harshanacz/xml-language-server.git
-git clone https://github.com/harshanacz/xml-language-client.git</code></pre>
-          <p>
-            After cloning, continue with the build commands below from inside
-            <code>xml-language-client</code>.
-          </p>
-        </section>
+cd wso2-mi-xml-ls
+npm install
+npm run bundle
 
-        <section class="doc-section" id="quick-start" data-search="quick start setup npm install build service server client commands">
-          <div class="section-heading">
-            <p class="eyebrow">Build order</p>
-            <h2>Quick Start</h2>
-          </div>
-          <p>
-            Build from the bottom layer upward: service first, server second, client last. That ensures
-            the local <code>file:</code> dependencies and generated server entry point are ready before
-            the extension tries to start. Start from inside <code>xml-language-workspace</code> and run
-            the steps in order.
-          </p>
-
-          <div class="steps">
-            <article class="step">
-              <span class="step-number">1</span>
-              <div>
-                <h3>Install and build the service</h3>
-                <pre class="code-block"><button class="copy-button" type="button">Copy</button><code>cd xml-language-service
+cd ../xml-language-client
 npm install
 npm run build</code></pre>
-              </div>
-            </article>
-
-            <article class="step">
-              <span class="step-number">2</span>
-              <div>
-                <h3>Install and build the server</h3>
-                <pre class="code-block"><button class="copy-button" type="button">Copy</button><code>cd ../xml-language-server
-npm install
-npm run bundle</code></pre>
-                <p>
-                  <code>npm run bundle</code> creates <code>dist/server.js</code> and copies runtime assets
-                  such as the Xerces WASM file and default schemas.
-                </p>
-              </div>
-            </article>
-
-            <article class="step">
-              <span class="step-number">3</span>
-              <div>
-                <h3>Install and build the VS Code client</h3>
-                <pre class="code-block"><button class="copy-button" type="button">Copy</button><code>cd ../xml-language-client
-npm install
-npm run build</code></pre>
-              </div>
-            </article>
-          </div>
           <div class="callout">
-            <strong>New terminal note:</strong>
-            If you open a fresh terminal in <code>xml-language-workspace</code> for step 2 or 3, use
-            <code>cd xml-language-server</code> or <code>cd xml-language-client</code> instead of the
-            <code>../</code> command shown for the sequential flow.
+            <strong>Important:</strong>
+            <code>npm run bundle</code> must create <code>wso2-mi-xml-ls/dist/server.js</code>.
+            The client depends on that file.
           </div>
         </section>
 
-        <section class="doc-section" id="run" data-search="run vscode extension host launch f5 xml activation development path">
+        <section class="doc-section" id="run" data-search="run vscode launch extension f5 xml activation development host">
           <div class="section-heading">
             <p class="eyebrow">Development</p>
             <h2>Run in VS Code</h2>
@@ -193,101 +119,28 @@ npm run build</code></pre>
             <li>Open <code>xml-language-client</code> in VS Code.</li>
             <li>Run the <code>Launch Extension</code> debug configuration, or press <code>F5</code>.</li>
             <li>In the Extension Development Host window, open an <code>.xml</code>, <code>.xsd</code>, or <code>.xsl</code> file.</li>
-            <li>The client starts <code>../xml-language-server/dist/server.js --stdio</code> automatically.</li>
+            <li>The client starts <code>../wso2-mi-xml-ls/dist/server.js --stdio</code> automatically.</li>
           </ol>
           <div class="callout">
-            <strong>Activation trigger:</strong>
-            The extension activates on <code>onLanguage:xml</code>, so the server starts only after VS Code opens a document recognized as XML.
+            <strong>Activation:</strong>
+            The extension starts only after VS Code opens a document recognized as XML.
           </div>
         </section>
 
-        <section class="doc-section" id="test-workspace" data-search="test workspace xls-test sample xml github clone validation">
+        <section class="doc-section" id="test-workspace" data-search="test workspace xls-test sample xml">
           <div class="section-heading">
-            <p class="eyebrow">Try it</p>
+            <p class="eyebrow">Optional</p>
             <h2>Test Workspace</h2>
           </div>
           <p>
-            Use the <a href="https://github.com/harshanacz/xls-test">xls-test repository</a> as a sample
-            XML workspace for checking activation, diagnostics, completion, hover, outline, folding,
-            rename, formatting, and schema validation.
+            Use the <a href="https://github.com/harshanacz/xls-test">xls-test repository</a>
+            if you want a sample XML workspace for checking the extension.
           </p>
           <pre class="code-block"><button class="copy-button" type="button">Copy</button><code>git clone https://github.com/harshanacz/xls-test.git
 code xls-test</code></pre>
-          <p>
-            Start the extension from <code>xml-language-client</code>, then open this test workspace in
-            the Extension Development Host window and edit its XML files.
-          </p>
         </section>
 
-        <section class="doc-section" id="schemas" data-search="schema setup xsd settings json xmlLanguageServer schemas pattern path diagnostics validation">
-          <div class="section-heading">
-            <p class="eyebrow">Validation</p>
-            <h2>Schema Setup</h2>
-          </div>
-          <p>
-            Built-in schema associations are provided by the service for common files such as
-            <code>pom.xml</code> and <code>web.xml</code>. Add custom associations in VS Code settings
-            with <code>xmlLanguageServer.schemas</code>.
-          </p>
-          <pre class="code-block"><button class="copy-button" type="button">Copy</button><code>{
-  "xmlLanguageServer.schemas": [
-    {
-      "pattern": "config.xml",
-      "xsdPath": "schemas/config.xsd"
-    },
-    {
-      "pattern": "**/*.xml",
-      "xsdPath": "/absolute/path/to/schema.xsd"
-    }
-  ]
-}</code></pre>
-          <p>
-            Relative <code>xsdPath</code> values are resolved from the workspace root. For XSD files with
-            <code>xs:include</code> or <code>xs:import</code>, keep the imported XSD and DTD files beside
-            the entry schema or in subdirectories under it; the server loads sibling schema assets recursively.
-          </p>
-        </section>
-
-        <section class="doc-section" id="debug" data-search="debug attach server inspect port 6009 launch configuration diagnostics logs">
-          <div class="section-heading">
-            <p class="eyebrow">Debug flow</p>
-            <h2>Debugging</h2>
-          </div>
-          <div class="feature-grid two">
-            <article class="feature-card">
-              <h3>Client debugging</h3>
-              <p>
-                Use <code>Launch Extension</code>. The configured pre-launch task runs <code>npm run build</code>
-                and loads <code>dist/extension.js</code> in the Extension Development Host.
-              </p>
-            </article>
-            <article class="feature-card">
-              <h3>Server debugging</h3>
-              <p>
-                Use <code>Launch + Attach Server</code>. The client starts Node with
-                <code>--inspect=6009</code>, and VS Code attaches to the server output in
-                <code>../xml-language-server/dist</code>.
-              </p>
-            </article>
-          </div>
-        </section>
-
-        <section class="doc-section" id="package" data-search="package vsix vsce install extension production build">
-          <div class="section-heading">
-            <p class="eyebrow">Distribution</p>
-            <h2>Package</h2>
-          </div>
-          <p>
-            After building the service, server, and client, create a VSIX package from the client repo.
-          </p>
-          <pre class="code-block"><button class="copy-button" type="button">Copy</button><code>cd ../xml-language-client
-npm run package</code></pre>
-          <p>
-            The package script uses <code>vsce package</code> from this repository's dev dependencies.
-          </p>
-        </section>
-
-        <section class="doc-section" id="troubleshooting" data-search="troubleshooting errors server missing module wasm schemas diagnostics startup extension host">
+        <section class="doc-section" id="troubleshooting" data-search="troubleshooting server missing module dist startup extension host">
           <div class="section-heading">
             <p class="eyebrow">Fast fixes</p>
             <h2>Troubleshooting</h2>
@@ -296,55 +149,30 @@ npm run package</code></pre>
             <table>
               <thead>
                 <tr>
-                  <th>Symptom</th>
+                  <th>Problem</th>
                   <th>Check</th>
                   <th>Fix</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  <td>Extension starts but no XML features appear.</td>
-                  <td>Open an XML file and check the Extension Host console.</td>
-                  <td>Rebuild the client with <code>npm run build</code>.</td>
-                </tr>
-                <tr>
                   <td>Server module cannot be found.</td>
-                  <td>Confirm <code>../xml-language-server/dist/server.js</code> exists.</td>
-                  <td>Run <code>npm install</code> and <code>npm run bundle</code> in the server repo.</td>
+                  <td><code>../wso2-mi-xml-ls/dist/server.js</code> exists.</td>
+                  <td>Run <code>npm install</code> and <code>npm run bundle</code> in <code>wso2-mi-xml-ls</code>.</td>
                 </tr>
                 <tr>
-                  <td>Service package cannot be resolved.</td>
-                  <td>Confirm <code>../xml-language-service/dist/index.js</code> exists.</td>
-                  <td>Run <code>npm install</code> and <code>npm run build</code> in the service repo, then reinstall server/client dependencies.</td>
+                  <td>Extension opens but XML features do not work.</td>
+                  <td>An XML file is open in the Extension Development Host.</td>
+                  <td>Run <code>npm run build</code> in <code>xml-language-client</code>, then launch again.</td>
                 </tr>
                 <tr>
-                  <td>XSD diagnostics do not show.</td>
-                  <td>Check <code>xmlLanguageServer.schemas</code> and schema paths.</td>
-                  <td>Use workspace-relative paths or absolute paths, then reload the VS Code window.</td>
-                </tr>
-                <tr>
-                  <td>WASM validation fails at runtime.</td>
-                  <td>Confirm <code>xerces_validator.wasm</code> was copied into server <code>dist</code>.</td>
-                  <td>Run the server <code>npm run bundle</code> script again.</td>
+                  <td>The server repo has a different folder name.</td>
+                  <td>The client path still points to <code>../wso2-mi-xml-ls/dist/server.js</code>.</td>
+                  <td>Rename the folder to <code>wso2-mi-xml-ls</code>, or update the path in <code>src/extension.ts</code>.</td>
                 </tr>
               </tbody>
             </table>
           </div>
-        </section>
-
-        <section class="doc-section" id="checklist" data-search="checklist verify done setup complete">
-          <div class="section-heading">
-            <p class="eyebrow">Verify</p>
-            <h2>Setup Checklist</h2>
-          </div>
-          <form class="checklist" aria-label="Setup checklist">
-            <label><input type="checkbox" data-check="layout"> Three repositories are sibling folders.</label>
-            <label><input type="checkbox" data-check="service"> <code>xml-language-service</code> is installed and built.</label>
-            <label><input type="checkbox" data-check="server"> <code>xml-language-server/dist/server.js</code> exists.</label>
-            <label><input type="checkbox" data-check="client"> <code>xml-language-client/dist/extension.js</code> exists.</label>
-            <label><input type="checkbox" data-check="launch"> <code>Launch Extension</code> opens an Extension Development Host.</label>
-            <label><input type="checkbox" data-check="xml"> Opening an XML file starts the server and enables features.</label>
-          </form>
         </section>
       </main>
     </div>
