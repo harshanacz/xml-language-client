@@ -121,8 +121,8 @@ export async function activate(context: ExtensionContext): Promise<void> {
   }
 
   client = new LanguageClient(
-    'xmlLanguageServer',
-    'XML Language Server',
+    'wso2MiLanguageServer',
+    'wso2-mi-language-server',
     serverOptions,
     clientOptions
   )
