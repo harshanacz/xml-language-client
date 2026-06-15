@@ -27,34 +27,7 @@
           "xml"
         ]
       }
-    ],
-    "configuration": {
-      "title": "XML Language Server",
-      "properties": {
-        "xmlLanguageServer.schemas": {
-          "type": "array",
-          "default": [],
-          "description": "Custom XSD schema associations.",
-          "items": {
-            "type": "object",
-            "required": [
-              "pattern",
-              "xsdPath"
-            ],
-            "properties": {
-              "pattern": {
-                "type": "string",
-                "description": "File name or glob pattern to match (e.g. 'config.xml', '**/*.xml')."
-              },
-              "xsdPath": {
-                "type": "string",
-                "description": "Absolute path to the XSD file, or a path relative to the workspace root."
-              }
-            }
-          }
-        }
-      }
-    }
+    ]
   },
   "scripts": {
     "build": "tsc",

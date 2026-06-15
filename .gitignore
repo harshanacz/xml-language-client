@@ -3,3 +3,4 @@ dist/
 *.vsix
 .claude
 .DS_Store
+/.idea

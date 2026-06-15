@@ -55,6 +55,7 @@ function buildSchemasFromWorkspace(): SchemaConfig[] {
       console.log(
         `[client] Found project at workspace root version: ${rootVersion} → schema: ${schemaFolder}`
       )
+      continue  // root IS the project — skip child directory scan
     }
 
     // Scan direct child directories
