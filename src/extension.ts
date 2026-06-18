@@ -88,7 +88,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
   const serverModule = path.join(
     context.extensionPath,
     '..',
-    'wso2-mi-xml-ls',
+    'wso2-mi-language-server-ts',
     'dist',
     'server.js'
   )
@@ -101,7 +101,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
     },
     debug: {
       command: process.execPath,
-      args: ['--nolazy', '--inspect=6009', serverModule, '--stdio'],
+      args: ['--nolazy', '--inspect-brk=6009', serverModule, '--stdio'],
       transport: TransportKind.stdio
     }
   }

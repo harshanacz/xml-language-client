@@ -6,12 +6,11 @@
       "type": "extensionHost",
       "request": "launch",
       "args": [
-        "--extensionDevelopmentPath=${workspaceFolder}"
+        "--extensionDevelopmentPath=${workspaceFolder:client}"
       ],
       "outFiles": [
-        "${workspaceFolder}/dist/**/*.js"
-      ],
-      "preLaunchTask": "npm: build"
+        "${workspaceFolder:client}/dist/**/*.js"
+      ]
     },
     {
       "name": "Attach to Server",
@@ -19,8 +18,12 @@
       "request": "attach",
       "port": 6009,
       "restart": true,
+      "sourceMaps": true,
       "outFiles": [
-        "${workspaceFolder}/../xml-language-server/dist/**/*.js"
+        "${workspaceFolder:server}/dist/**/*.js"
+      ],
+      "skipFiles": [
+        "<node_internals>/**"
       ]
     }
   ],
