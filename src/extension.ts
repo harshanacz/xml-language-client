@@ -101,7 +101,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
     },
     debug: {
       command: process.execPath,
-      args: ['--nolazy', '--inspect-brk=6009', serverModule, '--stdio'],
+      args: ['--nolazy', '--inspect=6009', serverModule, '--stdio'],
       transport: TransportKind.stdio
     }
   }
