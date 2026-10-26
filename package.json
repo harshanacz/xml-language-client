@@ -3,6 +3,7 @@
   "displayName": "XML Language Support",
   "description": "XML language support powered by xml-language-server",
   "version": "0.0.1",
+  "publisher": "harshanacz",
   "engines": {
     "vscode": "^1.85.0"
   },
@@ -32,16 +33,17 @@
   "scripts": {
     "build": "tsc",
     "build:watch": "tsc --watch",
-    "package": "vsce package"
+    "package": "vsce package --no-dependencies --allow-missing-repository",
+    "bundle": "esbuild src/extension.ts --bundle --platform=node --format=cjs --external:vscode --sourcemap --outfile=dist/extension.js"
   },
   "dependencies": {
-    "vscode-languageclient": "^9.0.1",
-    "xml-language-service": "file:../xml-language-service"
+    "vscode-languageclient": "^9.0.1"
   },
   "devDependencies": {
     "@types/node": "^25.6.0",
     "@types/vscode": "^1.85.0",
     "@vscode/vsce": "^2.0.0",
-    "typescript": "^6.0.3"
+    "typescript": "^6.0.3",
+    "esbuild": "^0.28.0"
   }
 }
