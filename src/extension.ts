@@ -1,3 +1,4 @@
+import * as fs from 'fs'
 import * as path from 'path'
 import * as vscode from 'vscode'
 import { ExtensionContext, workspace } from 'vscode'
@@ -11,13 +12,16 @@ import {
 let client: LanguageClient
 
 export async function activate(context: ExtensionContext): Promise<void> {
-  const serverModule = path.join(
+  // A packaged extension ships the server under ./server; in a development checkout it is a sibling repo.
+  const bundledServer = context.asAbsolutePath(path.join('server', 'server.js'))
+  const siblingServer = path.join(
     context.extensionPath,
     '..',
     'xml-language-server',
     'dist',
     'server.js'
   )
+  const serverModule = fs.existsSync(bundledServer) ? bundledServer : siblingServer
 
   const serverOptions: ServerOptions = {
     run: {

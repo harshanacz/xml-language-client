@@ -4,3 +4,4 @@ dist/
 .claude
 .DS_Store
 /.idea
+server/

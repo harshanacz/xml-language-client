@@ -1,0 +1,6 @@
+**
+!dist/extension.js
+!dist/extension.js.map
+!server/**
+!package.json
+!README.md
