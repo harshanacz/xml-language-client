@@ -1,9 +1,33 @@
 {
   "name": "xml-language-client",
   "displayName": "XML Language Support",
-  "description": "XML language support powered by xml-language-server",
+  "description": "Rich XML editing for VS Code, powered by a Language Server Protocol backend. Works with .xml, .xsd and .xsl files.",
   "version": "0.0.1",
   "publisher": "harshanacz",
+  "icon": "images/icon.png",
+  "galleryBanner": {
+    "color": "#141c36",
+    "theme": "dark"
+  },
+  "homepage": "https://github.com/harshanacz/xml-language-client#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/harshanacz/xml-language-client.git"
+  },
+  "bugs": {
+    "url": "https://github.com/harshanacz/xml-language-client/issues"
+  },
+  "keywords": [
+    "xml",
+    "xsd",
+    "xsl",
+    "xslt",
+    "schema",
+    "language server",
+    "lsp",
+    "wso2",
+    "micro integrator"
+  ],
   "engines": {
     "vscode": "^1.85.0"
   },

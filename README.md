@@ -1,27 +1,74 @@
-# XML Language Client
+<p align="center">
+  <img src="images/icon.png" alt="XML Language Support icon" width="128" height="128">
+</p>
 
-VS Code language client for XML support, powered by `wso2-mi-language-server-ts`.
+<h1 align="center">XML Language Support</h1>
 
+<p align="center">
+  Rich XML editing for Visual Studio Code, powered by the Language Server Protocol.
+</p>
 
-## Architecture
+<p align="center">
+  <img alt="VS Code" src="https://img.shields.io/badge/VS%20Code-%5E1.85.0-007ACC?logo=visualstudiocode&logoColor=white">
+  <img alt="Version" src="https://img.shields.io/badge/version-0.0.1-ff8a3d">
+  <img alt="LSP" src="https://img.shields.io/badge/protocol-LSP-4a8dff">
+</p>
+
+---
+
+## Overview
+
+**XML Language Support** is a lightweight VS Code client that connects the editor to
+an XML language server. All the smart editing features come from the server, while
+this extension takes care of starting it, keeping it in sync with your workspace, and
+wiring it into VS Code.
+
+## Highlights
+
+- **Works out of the box** with `.xml`, `.xsd` and `.xsl` files.
+- **Self-contained packaging**: the language server ships inside the extension (`server/`),
+  so no extra setup is needed once installed from a `.vsix`.
+- **Workspace aware**: watches `**/*.xml` so the server stays up to date as files change.
+- **Lightweight**: activates only when an XML document is opened.
+
+## Supported files
+
+| Extension | Description           |
+| --------- | --------------------- |
+| `.xml`    | XML documents         |
+| `.xsd`    | XML Schema documents  |
+| `.xsl`    | XSL stylesheets       |
+
+## Requirements
+
+- Visual Studio Code `1.85.0` or newer.
+
+## How it works
 
 ```text
-VS Code extension
-  -> xml-language-client
-  -> wso2-mi-language-server-ts
+┌──────────────┐   LSP over stdio   ┌───────────────────────┐
+│   VS Code    │ ◀────────────────▶ │  XML language server  │
+│  (this ext.) │                    │      (server.js)      │
+└──────────────┘                    └───────────────────────┘
 ```
 
-## Connect the Language Server
+When an XML file is opened, the extension looks for the server in this order:
 
+1. `server/server.js` bundled inside the extension (packaged builds).
+2. `../xml-language-server/dist/server.js` next to this repository (development checkouts).
+
+## Development setup
+
+Clone the server and the client side by side:
 
 ```bash
-mkdir wso2-mi-xml-workspace
-cd wso2-mi-xml-workspace
+mkdir xml-workspace
+cd xml-workspace
 
-git clone https://github.com/harshanacz/wso2-mi-language-server-ts.git
+git clone https://github.com/harshanacz/wso2-mi-language-server-ts.git xml-language-server
 git clone https://github.com/harshanacz/xml-language-client.git
 
-cd wso2-mi-language-server-ts
+cd xml-language-server
 npm install
 npm run bundle
 
@@ -30,12 +77,27 @@ npm install
 npm run build
 ```
 
-Then open `xml-language-client` in VS Code, run the `Launch Extension` debug
-configuration, and open an XML file in the Extension Development Host.
+Then open `xml-language-client` in VS Code, run the **Launch Extension** debug
+configuration (or press `F5`), and open an XML file in the Extension Development Host.
 
-## Development
+### Useful scripts
 
-Open `xml-language-client` in VS Code and run the `Launch Extension` debug
-configuration. In the Extension Development Host window, open an `.xml`, `.xsd`,
-or `.xsl` file to activate the client.
+| Script                | What it does                                         |
+| --------------------- | ---------------------------------------------------- |
+| `npm run build`       | Type-checks and compiles with `tsc`.                 |
+| `npm run build:watch` | Recompiles on every change.                          |
+| `npm run bundle`      | Bundles the extension into `dist/extension.js`.      |
+| `npm run package`     | Creates an installable `.vsix` package.              |
 
+## Troubleshooting
+
+| Problem                                  | Fix                                                                                     |
+| ---------------------------------------- | --------------------------------------------------------------------------------------- |
+| Server module cannot be found            | Make sure `server/server.js` exists, or that `../xml-language-server/dist/server.js` is built. |
+| Extension opens but XML features are off | Confirm the file language mode (bottom right of VS Code) is set to **XML**.            |
+| Need server logs                         | Open the **Output** panel and pick `xml-language-server` from the dropdown.            |
+
+## Links
+
+- [Report an issue](https://github.com/harshanacz/xml-language-client/issues)
+- [Language server](https://github.com/harshanacz/wso2-mi-language-server-ts)
