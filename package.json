@@ -2,8 +2,10 @@
   "name": "xml-language-client",
   "displayName": "XML Language Support",
   "description": "Rich XML editing for VS Code, powered by a Language Server Protocol backend. Works with .xml, .xsd and .xsl files.",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "publisher": "harshanacz",
+  "license": "MIT",
+  "preview": true,
   "icon": "images/icon.png",
   "galleryBanner": {
     "color": "#141c36",

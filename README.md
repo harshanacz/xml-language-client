@@ -10,7 +10,7 @@
 
 <p align="center">
   <img alt="VS Code" src="https://img.shields.io/badge/VS%20Code-%5E1.85.0-007ACC?logo=visualstudiocode&logoColor=white">
-  <img alt="Version" src="https://img.shields.io/badge/version-0.0.1-ff8a3d">
+  <img alt="Version" src="https://img.shields.io/badge/version-0.1.0%20preview-ff8a3d">
   <img alt="LSP" src="https://img.shields.io/badge/protocol-LSP-4a8dff">
 </p>
 
@@ -23,9 +23,17 @@ an XML language server. All the smart editing features come from the server, whi
 this extension takes care of starting it, keeping it in sync with your workspace, and
 wiring it into VS Code.
 
+> **Preview release.** This is an early `0.1.0` version. Expect rough edges and
+> missing settings; please [report problems](https://github.com/harshanacz/xml-language-client/issues).
+
 ## Highlights
 
 - **Works out of the box** with `.xml`, `.xsd` and `.xsl` files.
+- **Syntax checking** that reports mismatched tags and undefined entities as you type.
+- **Schema-aware editing** for `pom.xml`, `web.xml`, `persistence.xml` and Spring bean files, using built-in XSDs.
+- **Local schemas**: a document that declares `xsi:noNamespaceSchemaLocation` or
+  `xsi:schemaLocation` pointing at a local `.xsd` is validated against it.
+- **Editor features**: completion, hover, outline, folding, formatting, rename, go to definition and references.
 - **Self-contained packaging**: the language server ships inside the extension (`server/`),
   so no extra setup is needed once installed from a `.vsix`.
 - **Workspace aware**: watches `**/*.xml` so the server stays up to date as files change.
@@ -43,6 +51,11 @@ wiring it into VS Code.
 
 - Visual Studio Code `1.85.0` or newer.
 
+## Known limitations (0.1.0)
+
+- There are no extension settings yet, so custom schema associations cannot be configured from VS Code.
+- Only documents saved as files are supported; untitled editors are not.
+
 ## How it works
 
 ```text
@@ -59,16 +72,21 @@ When an XML file is opened, the extension looks for the server in this order:
 
 ## Development setup
 
-Clone the server and the client side by side:
+The server depends on the service by relative path, so clone all three side by side:
 
 ```bash
 mkdir xml-workspace
 cd xml-workspace
 
-git clone https://github.com/harshanacz/wso2-mi-language-server-ts.git xml-language-server
+git clone https://github.com/harshanacz/xml-language-service.git
+git clone https://github.com/harshanacz/xml-language-server.git
 git clone https://github.com/harshanacz/xml-language-client.git
 
-cd xml-language-server
+cd xml-language-service
+npm install
+npm run build
+
+cd ../xml-language-server
 npm install
 npm run bundle
 
@@ -100,4 +118,5 @@ configuration (or press `F5`), and open an XML file in the Extension Development
 ## Links
 
 - [Report an issue](https://github.com/harshanacz/xml-language-client/issues)
-- [Language server](https://github.com/harshanacz/wso2-mi-language-server-ts)
+- [Language server](https://github.com/harshanacz/xml-language-server)
+- [Language service](https://github.com/harshanacz/xml-language-service)
