@@ -1,7 +1,7 @@
 {
   "name": "xml-language-client",
-  "displayName": "XML Language Support",
-  "description": "Rich XML editing for VS Code, powered by a Language Server Protocol backend. Works with .xml, .xsd and .xsl files.",
+  "displayName": "Schema-Aware XML",
+  "description": "Schema-aware XML validation and completion for .xml, .xsd and .xsl files. JVM-free.",
   "version": "0.1.0",
   "publisher": "harshanacz",
   "license": "MIT",
@@ -25,8 +25,20 @@
     "xsl",
     "xslt",
     "schema",
+    "xml schema",
+    "validation",
+    "validator",
+    "completion",
+    "intellisense",
+    "lint",
+    "formatter",
     "language server",
     "lsp",
+    "maven",
+    "pom",
+    "spring",
+    "jvm-free",
+    "no java",
     "wso2",
     "micro integrator"
   ],
@@ -34,7 +46,8 @@
     "vscode": "^1.85.0"
   },
   "categories": [
-    "Programming Languages"
+    "Programming Languages",
+    "Linters"
   ],
   "activationEvents": [
     "onLanguage:xml"

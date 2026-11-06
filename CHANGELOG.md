@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to **XML Language Support** are documented here.
+All notable changes to **Schema-Aware XML** are documented here.
 
 ## [0.1.0] - Preview
 

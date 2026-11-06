@@ -1,11 +1,11 @@
 <p align="center">
-  <img src="images/icon.png" alt="XML Language Support icon" width="128" height="128">
+  <img src="images/icon.png" alt="Schema-Aware XML icon" width="128" height="128">
 </p>
 
-<h1 align="center">XML Language Support</h1>
+<h1 align="center">Schema-Aware XML</h1>
 
 <p align="center">
-  Rich XML editing for Visual Studio Code, powered by the Language Server Protocol.
+  JVM-free XML language support for Visual Studio Code, with schema-aware validation and completion.
 </p>
 
 <p align="center">
@@ -18,26 +18,31 @@
 
 ## Overview
 
-**XML Language Support** is a lightweight VS Code client that connects the editor to
-an XML language server. All the smart editing features come from the server, while
-this extension takes care of starting it, keeping it in sync with your workspace, and
-wiring it into VS Code.
+**Schema-Aware XML** gives VS Code the editing features you expect for XML, and it
+knows about your schemas. Open a `pom.xml`, a `web.xml` or any file that points at an
+XSD, and completion, hover and validation follow the schema.
 
 > **Preview release.** This is an early `0.1.0` version. Expect rough edges and
 > missing settings; please [report problems](https://github.com/harshanacz/xml-language-client/issues).
 
-## Highlights
+## Why this extension
 
-- **Works out of the box** with `.xml`, `.xsd` and `.xsl` files.
+- **No Java or JVM.** Most XML language servers run on Java. This one is written in
+  TypeScript, so there is no runtime to install or configure.
+- **Real XSD validation.** Schemas are checked by Apache Xerces-C++ compiled to
+  WebAssembly and bundled inside the extension.
+- **Works on half-typed XML.** The parser is fault-tolerant, so completion and the
+  outline keep working while you type.
+- **Lightweight.** The extension activates only when you open an XML document.
+
+## Features
+
 - **Syntax checking** that reports mismatched tags and undefined entities as you type.
 - **Schema-aware editing** for `pom.xml`, `web.xml`, `persistence.xml` and Spring bean files, using built-in XSDs.
 - **Local schemas**: a document that declares `xsi:noNamespaceSchemaLocation` or
   `xsi:schemaLocation` pointing at a local `.xsd` is validated against it.
-- **Editor features**: completion, hover, outline, folding, formatting, rename, go to definition and references.
-- **Self-contained packaging**: the language server ships inside the extension (`server/`),
-  so no extra setup is needed once installed from a `.vsix`.
+- **Editor features**: completion, hover, outline, folding, formatting, rename, go to definition and find references.
 - **Workspace aware**: watches `**/*.xml` so the server stays up to date as files change.
-- **Lightweight**: activates only when an XML document is opened.
 
 ## Supported files
 
@@ -50,13 +55,38 @@ wiring it into VS Code.
 ## Requirements
 
 - Visual Studio Code `1.85.0` or newer.
+- Nothing else. The language server ships inside the extension.
 
 ## Known limitations (0.1.0)
 
 - There are no extension settings yet, so custom schema associations cannot be configured from VS Code.
 - Only documents saved as files are supported; untitled editors are not.
+- The extension runs in desktop VS Code. It does not run in VS Code for the Web yet.
 
-## How it works
+## Roadmap
+
+- Extension settings, including custom schema associations.
+- Support for untitled documents.
+- VS Code for the Web support.
+
+## Troubleshooting
+
+| Problem                                  | Fix                                                                         |
+| ---------------------------------------- | --------------------------------------------------------------------------- |
+| Extension opens but XML features are off | Confirm the file language mode (bottom right of VS Code) is set to **XML**. |
+| Need server logs                         | Open the **Output** panel and pick `xml-language-server` from the dropdown. |
+
+## Links
+
+- [Report an issue](https://github.com/harshanacz/xml-language-client/issues)
+- [Language server](https://github.com/harshanacz/xml-language-server)
+- [Language service](https://github.com/harshanacz/xml-language-service)
+
+---
+
+## For contributors
+
+### How it works
 
 ```text
 ┌──────────────┐   LSP over stdio   ┌───────────────────────┐
@@ -65,12 +95,15 @@ wiring it into VS Code.
 └──────────────┘                    └───────────────────────┘
 ```
 
+This extension is a thin client. It starts the server, keeps it in sync with your
+workspace and wires it into VS Code; the editing features come from the server.
+
 When an XML file is opened, the extension looks for the server in this order:
 
 1. `server/server.js` bundled inside the extension (packaged builds).
 2. `../xml-language-server/dist/server.js` next to this repository (development checkouts).
 
-## Development setup
+### Development setup
 
 The server depends on the service by relative path, so clone all three side by side:
 
@@ -98,6 +131,9 @@ npm run build
 Then open `xml-language-client` in VS Code, run the **Launch Extension** debug
 configuration (or press `F5`), and open an XML file in the Extension Development Host.
 
+If the server cannot be found, make sure `server/server.js` exists, or that
+`../xml-language-server/dist/server.js` is built.
+
 ### Useful scripts
 
 | Script                | What it does                                         |
@@ -107,16 +143,6 @@ configuration (or press `F5`), and open an XML file in the Extension Development
 | `npm run bundle`      | Bundles the extension into `dist/extension.js`.      |
 | `npm run package`     | Creates an installable `.vsix` package.              |
 
-## Troubleshooting
+## License
 
-| Problem                                  | Fix                                                                                     |
-| ---------------------------------------- | --------------------------------------------------------------------------------------- |
-| Server module cannot be found            | Make sure `server/server.js` exists, or that `../xml-language-server/dist/server.js` is built. |
-| Extension opens but XML features are off | Confirm the file language mode (bottom right of VS Code) is set to **XML**.            |
-| Need server logs                         | Open the **Output** panel and pick `xml-language-server` from the dropdown.            |
-
-## Links
-
-- [Report an issue](https://github.com/harshanacz/xml-language-client/issues)
-- [Language server](https://github.com/harshanacz/xml-language-server)
-- [Language service](https://github.com/harshanacz/xml-language-service)
+[MIT](LICENSE)
