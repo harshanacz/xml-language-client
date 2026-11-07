@@ -41,6 +41,7 @@ export async function activate(context: ExtensionContext): Promise<void> {
       { scheme: 'file', language: 'xml' }
     ],
     synchronize: {
+      configurationSection: 'xmlLanguageServer',
       fileEvents: workspace.createFileSystemWatcher('**/*.xml')
     }
   }

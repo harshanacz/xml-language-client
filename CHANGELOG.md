@@ -2,6 +2,12 @@
 
 All notable changes to **Schema-Aware XML** are documented here.
 
+## [Unreleased]
+
+### Added
+
+- `xmlLanguageServer.schemas` setting to associate XML files with your own XSDs, with Settings UI and `settings.json` validation. Changes reach the server without reloading the window.
+
 ## [0.1.0] - Preview
 
 ### Added
