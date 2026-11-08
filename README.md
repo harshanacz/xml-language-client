@@ -14,6 +14,10 @@
   <img alt="LSP" src="https://img.shields.io/badge/protocol-LSP-4a8dff">
 </p>
 
+<p align="center">
+  <a href="https://marketplace.visualstudio.com/items?itemName=harshanacz.xml-language-client">VS Code Marketplace</a> · <a href="https://open-vsx.org/extension/harshanacz/xml-language-client">Open VSX</a> (Google Antigravity, VSCodium)
+</p>
+
 ---
 
 ## Overview
