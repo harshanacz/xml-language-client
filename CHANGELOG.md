@@ -2,6 +2,12 @@
 
 All notable changes to **Schema-Aware XML** are documented here.
 
+## [Unreleased]
+
+### Added
+
+- `xmlLanguageServer.schemas` setting to associate XML files with XSD schemas by glob pattern. Changes apply to open documents without a reload.
+
 ## [0.1.0] - Preview
 
 ### Added

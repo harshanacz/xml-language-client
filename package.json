@@ -67,7 +67,36 @@
           "xml"
         ]
       }
-    ]
+    ],
+    "configuration": {
+      "title": "Schema-Aware XML",
+      "properties": {
+        "xmlLanguageServer.schemas": {
+          "type": "array",
+          "default": [],
+          "scope": "window",
+          "markdownDescription": "Associates XML files with XSD schemas. Each entry maps a glob `pattern` (for example `**/*.synapse.xml`) to an `xsdPath`, which is absolute or relative to a workspace folder. A matching entry takes precedence over the document's own `xsi:schemaLocation` hint and the built-in schemas (except for `pom.xml`). The first matching entry wins.",
+          "items": {
+            "type": "object",
+            "required": [
+              "pattern",
+              "xsdPath"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "pattern": {
+                "type": "string",
+                "markdownDescription": "Glob matched against the XML file path, for example `**/*.synapse.xml`."
+              },
+              "xsdPath": {
+                "type": "string",
+                "markdownDescription": "Path to the `.xsd` file, absolute or relative to a workspace folder."
+              }
+            }
+          }
+        }
+      }
+    }
   },
   "scripts": {
     "build": "tsc",
