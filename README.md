@@ -56,6 +56,27 @@ XSD, and completion, hover and validation follow the schema.
 | `.xsd`    | XML Schema documents  |
 | `.xsl`    | XSL stylesheets       |
 
+## Settings
+
+| Setting                     | Description                                         |
+| --------------------------- | --------------------------------------------------- |
+| `xmlLanguageServer.schemas` | Associates XML files with XSD schemas by file glob. |
+
+Add entries to your user or workspace `settings.json`:
+
+```jsonc
+"xmlLanguageServer.schemas": [
+  { "pattern": "**/*.synapse.xml", "xsdPath": "schemas/synapse.xsd" },
+  { "pattern": "**/proxy-*.xml", "xsdPath": "/opt/schemas/proxy.xsd" }
+]
+```
+
+- `pattern` is a glob matched against the XML file path.
+- `xsdPath` is an absolute path, or a path relative to a workspace folder.
+- The first matching entry wins, and it takes precedence over the document's own
+  `xsi:schemaLocation` hint and the built-in schemas (`pom.xml` always uses the bundled Maven schema).
+- Changes apply to open documents right away; no reload is needed.
+
 ## Requirements
 
 - Visual Studio Code `1.85.0` or newer.
@@ -63,13 +84,11 @@ XSD, and completion, hover and validation follow the schema.
 
 ## Known limitations (0.1.0)
 
-- There are no extension settings yet, so custom schema associations cannot be configured from VS Code.
 - Only documents saved as files are supported; untitled editors are not.
 - The extension runs in desktop VS Code. It does not run in VS Code for the Web yet.
 
 ## Roadmap
 
-- Extension settings, including custom schema associations.
 - Support for untitled documents.
 - VS Code for the Web support.
 
