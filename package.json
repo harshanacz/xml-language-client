@@ -67,7 +67,41 @@
           "xml"
         ]
       }
-    ]
+    ],
+    "configuration": {
+      "title": "Schema-Aware XML",
+      "properties": {
+        "xmlLanguageServer.schemas": {
+          "type": "array",
+          "default": [],
+          "markdownDescription": "Associate XML files with an XSD. Each entry maps a glob `pattern` to an `xsdPath`, which is absolute or relative to a workspace folder. For example `{ \"pattern\": \"**/*.config.xml\", \"xsdPath\": \"schemas/config.xsd\" }`. These associations take priority over the built-in schemas.",
+          "items": {
+            "type": "object",
+            "required": [
+              "pattern",
+              "xsdPath"
+            ],
+            "additionalProperties": false,
+            "properties": {
+              "pattern": {
+                "type": "string",
+                "description": "Glob matched against the XML file, for example **/*.config.xml.",
+                "examples": [
+                  "**/*.config.xml"
+                ]
+              },
+              "xsdPath": {
+                "type": "string",
+                "description": "Path to the XSD, absolute or relative to a workspace folder.",
+                "examples": [
+                  "schemas/config.xsd"
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
   },
   "scripts": {
     "build": "tsc",

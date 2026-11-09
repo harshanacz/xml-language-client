@@ -61,15 +61,28 @@ XSD, and completion, hover and validation follow the schema.
 - Visual Studio Code `1.85.0` or newer.
 - Nothing else. The language server ships inside the extension.
 
-## Known limitations (0.1.0)
+## Settings
 
-- There are no extension settings yet, so custom schema associations cannot be configured from VS Code.
+Associate your own XSDs with XML files using `xmlLanguageServer.schemas` in your VS Code settings (user or workspace):
+
+```json
+"xmlLanguageServer.schemas": [
+  { "pattern": "**/*.config.xml", "xsdPath": "schemas/config.xsd" }
+]
+```
+
+- `pattern` is a glob matched against the XML file.
+- `xsdPath` is absolute or relative to a workspace folder.
+- Your associations take priority over the built-in schemas, except for `pom.xml`, which always uses the bundled Maven schema.
+- Changes apply without reloading the window.
+
+## Known limitations
+
 - Only documents saved as files are supported; untitled editors are not.
 - The extension runs in desktop VS Code. It does not run in VS Code for the Web yet.
 
 ## Roadmap
 
-- Extension settings, including custom schema associations.
 - Support for untitled documents.
 - VS Code for the Web support.
 
